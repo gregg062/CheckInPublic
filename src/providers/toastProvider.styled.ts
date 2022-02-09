@@ -17,7 +17,7 @@ const ToastAnim = styled(Animated.View)`
   }
   shadow-opacity: 0.2;
   shadow-radius: 4px;
-  elevation: 8px;
+  elevation: 8;
 `
 const ToastContainer = styled.View`
   width: 100%;
