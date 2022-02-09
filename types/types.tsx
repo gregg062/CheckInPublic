@@ -23,13 +23,13 @@ export type FirebaseUserOptions = {
 
 export type UserProfile = {
   displayName: string
-  photo: string
+  photo: ImageSourcePropType
 }
 
 export enum SurveyType {
   'M' = 'Morning',
   'R' = 'RPE',
-  'I' = 'Injury'
+  'I' = 'Injury',
 }
 export type SurveyResults = {
   type: SurveyType

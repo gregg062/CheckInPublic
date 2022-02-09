@@ -3,11 +3,10 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState
+  useState,
 } from 'react'
 import { UserProfile } from '../../types/types'
 import { useAuthState } from '../hooks/useAuthState'
-import firestore from '@react-native-firebase/firestore'
 
 const UserProviderContext = createContext<UserProfile | null>(null)
 
@@ -23,9 +22,8 @@ const UserProvider = (props: any) => {
   const [user, setUser] = useState<UserProfile | null>(null)
 
   useEffect(() => {
-    console.log(auth, 'auth on UserProvider')
     let sub = () => {}
-    if (auth.user) {
+    /*if (auth.user) {
       sub = firestore()
         .collection('userProfiles')
         .doc(auth.user?.uid)
@@ -38,7 +36,7 @@ const UserProvider = (props: any) => {
     } else {
       console.log('setting user to null')
       setUser(null)
-    }
+    }*/
     return sub
   }, [auth])
   const value = useMemo(() => user, [user])

@@ -5,12 +5,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { CustomText } from '../..'
 import { GradBack } from '../../../screens/screens.styled'
 import { Avatars } from '../../../library/staticObjects'
-import { updateUserProfile } from '../../../services/firebase'
 import {
   AvatarButton,
   AvatarContainer,
   AvatarImage,
-  AvatarTitle
+  AvatarTitle,
 } from './AvatarCarousel.styled'
 import { colors } from '../../../theme'
 import { useAuthState } from '../../../hooks/useAuthState'
@@ -34,27 +33,27 @@ const AvatarCarousel: FC<Props> = ({ userId, noAction }) => {
     Animated.timing(heightAnim, {
       toValue: open ? 200 : 40,
       duration: open ? 400 : 200,
-      easing: Easing.linear
+      easing: Easing.linear,
     }).start()
     Animated.timing(containerWidth, {
       toValue: open ? width : 180,
       duration: open ? 400 : 200,
-      easing: Easing.linear
+      easing: Easing.linear,
     }).start()
     Animated.timing(carouselOpac, {
       toValue: open ? 1 : 0,
       duration: open ? 600 : 200,
-      easing: Easing.linear
+      easing: Easing.linear,
     }).start()
     Animated.timing(buttonHeight, {
       toValue: open ? 0 : 40,
       duration: 300,
-      easing: Easing.linear
+      easing: Easing.linear,
     }).start()
     Animated.timing(buttonOpac, {
       toValue: open ? 0 : 1,
       duration: open ? 400 : 600,
-      easing: Easing.linear
+      easing: Easing.linear,
     }).start()
   }, [open])
 
@@ -63,14 +62,14 @@ const AvatarCarousel: FC<Props> = ({ userId, noAction }) => {
       <AvatarButton
         style={{
           height: buttonHeight,
-          opacity: buttonOpac
+          opacity: buttonOpac,
         }}
       >
         <GradBack
           style={{
             borderRadius: 20,
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
@@ -97,7 +96,7 @@ const AvatarCarousel: FC<Props> = ({ userId, noAction }) => {
           height: heightAnim,
           width: containerWidth,
           overflow: 'hidden',
-          opacity: carouselOpac
+          opacity: carouselOpac,
         }}
       >
         <AvatarTitle>
@@ -110,16 +109,14 @@ const AvatarCarousel: FC<Props> = ({ userId, noAction }) => {
           data={Avatars}
           horizontal
           renderItem={({ item }) => {
+            console.log(item, 'ITEM')
             return (
               <TouchableOpacity
                 onPress={() => {
                   setOpen(false)
-                  if (userId) {
-                    updateUserProfile(userId, 'photo', item)
-                  }
                 }}
               >
-                <AvatarImage source={{ uri: item }} />
+                <AvatarImage source={item} />
               </TouchableOpacity>
             )
           }}

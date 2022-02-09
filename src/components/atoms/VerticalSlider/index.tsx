@@ -14,7 +14,11 @@ interface VSliderProps {
   reportedNumb: (numb: number) => void
 }
 
-const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
+const VerticalSlider: FC<VSliderProps> = ({
+  disable,
+  grow,
+  reportedNumb = () => {},
+}) => {
   const [pressed, setPressed] = useState<boolean>(false)
   const [numb, setNumb] = useState<number>(-40)
 
@@ -46,9 +50,12 @@ const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
       reportedNumb(10)
     }
   }
-  const calcRPE = (numbIn: number) => {
+
+  useEffect(() => {
+    const numbIn = Math.floor(-numb / 10)
     setResult(numbIn)
-    console.log(numbIn)
+  }, [numb])
+  const calcRPE = (numbIn: number) => {
     if (numbIn < 8) {
       return 'Very Light'
     } else if (numbIn >= 8 && numbIn < 14) {
@@ -70,23 +77,23 @@ const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
     Animated.timing(ylocal, {
       toValue: pressed ? 40 : 80,
       duration: 200,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start()
     Animated.timing(spacerOpac, {
       toValue: pressed ? 1 : 0,
       delay: 100,
       duration: 50,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start()
     Animated.timing(borderRad, {
       toValue: pressed ? 8 : 20,
       duration: 220,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start()
     Animated.timing(textOpac, {
       toValue: pressed ? 0 : 1,
       duration: 100,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start()
   }, [pressed])
 
@@ -94,7 +101,7 @@ const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
     onShouldBlockNativeResponder: () => false,
     onStartShouldSetPanResponder: () => true,
     onStartShouldSetPanResponderCapture: () => true,
-    onPanResponderGrant: (e) => {
+    onPanResponderGrant: e => {
       setPressed(true)
       disable()
     },
@@ -112,7 +119,7 @@ const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
       }
     },
     onPanResponderTerminationRequest: () => false,
-    onPanResponderRelease: async (e, { vx }) => {}
+    onPanResponderRelease: async (e, { vx }) => {},
   })
 
   const rNumb = 200 / Math.floor((numb + 650) / 100)
@@ -130,7 +137,7 @@ const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
           borderBottomRightRadius: borderRad,
           transform: [{ scale: pressed && grow ? 1.05 : 1 }],
           zIndex: 1,
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       />
       <View
@@ -145,12 +152,12 @@ const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
           maxHeight: 540,
           zIndex: 20,
           justifyContent: 'space-evenly',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
-        {RpeNumbers.map((item) => {
+        {RpeNumbers.map((item, index) => {
           return (
-            <CustomText bold color={colors.white}>
+            <CustomText key={index} bold color={colors.white}>
               {item}
             </CustomText>
           )
@@ -166,10 +173,10 @@ const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
           shadowColor: colors.black,
           shadowOffset: {
             width: 2,
-            height: 5
+            height: 5,
           },
           shadowOpacity: 0.2,
-          shadowRadius: 8
+          shadowRadius: 8,
         }}
         onPressIn={() => {
           setPressed(true)
@@ -196,21 +203,21 @@ const VerticalSlider: FC<VSliderProps> = ({ disable, grow, reportedNumb }) => {
             zIndex: 1,
             transform: [
               {
-                translateY: numb
+                translateY: numb,
               },
               {
-                scale: pressed ? 1.05 : 1
-              }
+                scale: pressed ? 1.05 : 1,
+              },
             ],
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
           {...pan.panHandlers}
         >
           <Text
             style={{
               fontWeight: '900',
-              color: pressed ? colors.black : colors.white
+              color: pressed ? colors.black : colors.white,
             }}
           >
             {calcRPE(Math.floor(-numb / 10))}

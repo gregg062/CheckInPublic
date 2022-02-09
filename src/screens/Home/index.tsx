@@ -1,29 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Carousel } from '../../components'
 import { tileTypes } from '../../components/molocules/Carousel'
 import { GradBack, ScreenBack } from '../screens.styled'
 import { homeTileData } from '../../library/staticObjects'
 import { useAuthState } from '../../hooks/useAuthState'
-import { getUserDetails } from '../../services/firebase'
-import { userAccessStore } from '../../store/user'
 import { colors } from '../../theme'
-import { Image } from 'react-native'
 
 const Home = ({ navigation }: { navigation: any }) => {
   const { user } = useAuthState()
-  const store = userAccessStore()
-
-  const getDetails = async () => {
-    if (user) {
-      const info = await getUserDetails(user?.email || '')
-      store.setAccessInfo(info)
-    }
-  }
-  useEffect(() => {
-    if (user) {
-      getDetails()
-    }
-  }, [user])
 
   return (
     <GradBack

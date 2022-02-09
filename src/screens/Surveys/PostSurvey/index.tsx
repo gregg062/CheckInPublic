@@ -5,15 +5,13 @@ import { Cta, CustomText, InputField } from '../../../components'
 import VerticalSlider from '../../../components/atoms/VerticalSlider'
 import {
   CloseIconContainer,
-  SubmitContainer
+  SubmitContainer,
 } from '../../../components/organisms/scrollableHeaderWrapper/scrollableHeaderWrapper.styled'
 import { RootStackParamList } from '../../../routes/root'
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types'
 import { colors } from '../../../theme'
 import { useAuthState } from '../../../hooks/useAuthState'
 import Warning from '../../../components/atoms/Warning'
-import { submitSurvey } from '../../../services/firebase'
-import { userAccessStore } from '../../../store/user'
 import { SurveyResults, SurveyType } from '../../../../types/types'
 import { useToast } from '../../../providers/toastProvider'
 import {
@@ -22,7 +20,7 @@ import {
   InputColumn,
   InputContainer,
   InputRow,
-  Styledkeyboard
+  Styledkeyboard,
 } from './PostSurvey.styled'
 import { transparentize } from 'polished'
 
@@ -32,7 +30,6 @@ interface InjuryProps {
 const PostSurvey: FC<InjuryProps> = ({ navigation }) => {
   const [scrolling, setScrolling] = useState<boolean>(true)
   const auth = useAuthState()
-  const info = userAccessStore()
   const [showWarning, setShowWarning] = useState<boolean>(false)
   const [type, setType] = useState<string>('')
   const [length, setLength] = useState<string>('')
@@ -68,13 +65,12 @@ const PostSurvey: FC<InjuryProps> = ({ navigation }) => {
                   date: new Date().toString(),
                   sessionType: type,
                   sessionLength: parseInt(length),
-                  RPE: report
+                  RPE: report,
                 }
                 if (auth.user) {
-                  submitSurvey(auth?.user?.uid, info.accessInfo?.org, results)
                   navigation.navigate('Home')
                   toast({
-                    text: '👍 RPE Report Submitted Successfully.'
+                    text: '👍 RPE Report Submitted Successfully.',
                   })
                 } else {
                   setShowWarning(true)
@@ -97,7 +93,7 @@ const PostSurvey: FC<InjuryProps> = ({ navigation }) => {
                   backColor={colors.white}
                   placeHolder="Gym"
                   value={type}
-                  onChangeText={(e) => {
+                  onChangeText={e => {
                     setType(e)
                   }}
                 />
@@ -111,7 +107,7 @@ const PostSurvey: FC<InjuryProps> = ({ navigation }) => {
                   backColor={colors.white}
                   placeHolder="30"
                   value={length}
-                  onChangeText={(e) => {
+                  onChangeText={e => {
                     setLength(e.toString())
                   }}
                 />
@@ -122,7 +118,7 @@ const PostSurvey: FC<InjuryProps> = ({ navigation }) => {
             disable={() => {
               setScrolling(!scrolling)
             }}
-            reportedNumb={(input) => {
+            reportedNumb={input => {
               setReport(input)
             }}
           />

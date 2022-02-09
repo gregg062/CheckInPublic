@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Cta, CustomText, InputField, Spacer } from '../../components'
 import { useAuthState } from '../../hooks/useAuthState'
-import { getUserProfile, setUserProfile } from '../../services/firebase'
 import { colors } from '../../theme'
 import { GradBack } from '../screens.styled'
 import { AuthContainer, CtaContainer, HeaderBar } from './Auth.styled'
-import auth from '@react-native-firebase/auth'
 import * as Keychain from 'react-native-keychain'
 import CloseIcon from '../../assets/icons/CloseIcon'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { userAccessStore } from '../../store/user'
 
 const Auth = ({ navigation }: { navigation: any }) => {
   const [email, setEmail] = useState('')
@@ -16,28 +15,19 @@ const Auth = ({ navigation }: { navigation: any }) => {
   const authState = useAuthState()
   const [error, setError] = useState<boolean>(false)
   const [submitting, setSubmitting] = useState<boolean>(false)
-
-  const checkProfile = async (uid: string) => {
-    const already = await getUserProfile(uid)
-    if (!already) {
-      setUserProfile(uid, '')
-    }
-    navigation.navigate('Home')
-  }
+  const store = userAccessStore()
 
   useEffect(() => {
-    console.log(authState, 'authState')
     if (authState.user) {
-      checkProfile(authState.user.uid)
+      navigation.navigate('Home')
     }
   }, [authState])
 
   const submitLogin = async () => {
     try {
-      let response = await auth().signInWithEmailAndPassword(email, password)
-      if (response && response.user) {
-        // setKeys()
-      }
+      store.setAccessInfo({
+        org: 'orgOne',
+      })
     } catch (e) {
       setError(true)
     }
@@ -45,7 +35,7 @@ const Auth = ({ navigation }: { navigation: any }) => {
 
   const setKeys = async () => {
     await Keychain.setGenericPassword(email, password, {
-      accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE
+      accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE,
     })
   }
 
@@ -53,8 +43,8 @@ const Auth = ({ navigation }: { navigation: any }) => {
     try {
       const options = {
         authenticationPrompt: {
-          title: 'Sign In to CheckIn'
-        }
+          title: 'Sign In to CheckIn',
+        },
       }
       const cred = await Keychain.getGenericPassword(options)
       if (cred) {
@@ -97,7 +87,7 @@ const Auth = ({ navigation }: { navigation: any }) => {
           backColor={colors.gray3}
           placeHolder="Email Address"
           value={email}
-          onChangeText={(e) => {
+          onChangeText={e => {
             setEmail(e)
           }}
           error={!email.includes('@')}
@@ -109,7 +99,7 @@ const Auth = ({ navigation }: { navigation: any }) => {
           backColor={colors.gray3}
           placeHolder="Password"
           value={password}
-          onChangeText={(e) => {
+          onChangeText={e => {
             setPassword(e)
             if (e.length === 0) {
               setError(false)

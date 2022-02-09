@@ -11,9 +11,8 @@ import {
   MoodSlider,
   morningStartingPoint,
   SleepSlider,
-  SorenessSlider
+  SorenessSlider,
 } from '../../../library/staticObjects'
-import { submitSurvey } from '../../../services/firebase'
 import { userAccessStore } from '../../../store/user'
 import { SurveyResults } from '../../../../types/types'
 import ScrollHeaderPage from '../../../components/organisms/scrollableHeaderWrapper'
@@ -43,7 +42,6 @@ const Morning: FC<SurveyProps> = ({ route, navigation }) => {
       submit={() => {
         if (auth.user) {
           setComplete(true)
-          submitSurvey(auth?.user?.uid, info.accessInfo?.org, results.current)
         }
       }}
       close={() => {

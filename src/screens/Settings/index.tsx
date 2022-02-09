@@ -5,7 +5,6 @@ import AvatarCarousel from '../../components/molocules/AvatarCarousel'
 import { colors } from '../../theme'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useAuthState } from '../../hooks/useAuthState'
-import { getUserProfile, updateUserProfile } from '../../services/firebase'
 import { GradBack } from '../screens.styled'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Warning from '../../components/atoms/Warning'
@@ -17,12 +16,12 @@ import {
   ReminderContainer,
   SafeContainer,
   SectionHeader,
-  StyledScroll
+  StyledScroll,
 } from './Settings.styled'
 
 enum ReminderTypes {
   RPE = 'rpe',
-  MORNING = 'morning'
+  MORNING = 'morning',
 }
 
 const Settings = ({ navigation }: { navigation: any }) => {
@@ -45,10 +44,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
 
   const getInfo = async () => {
     if (user) {
-      const info = await getUserProfile(user.uid)
-      if (info) {
-        setUserName(info.displayName)
-      }
+      setUserName(user.displayName)
     }
   }
 
@@ -87,7 +83,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
             small
             placeHolder="Users name"
             value={userName}
-            onChangeText={(newName) => {
+            onChangeText={newName => {
               setUserName(newName)
             }}
           />
@@ -96,7 +92,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
               style={{
                 borderRadius: 20,
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
@@ -106,7 +102,6 @@ const Settings = ({ navigation }: { navigation: any }) => {
                 onPress={() => {
                   Keyboard.dismiss()
                   if (userName && user) {
-                    updateUserProfile(user.uid, 'displayName', userName)
                     setUpdate(true)
                   } else {
                     setDisplayWarning(true)
@@ -121,7 +116,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
           </ButtonContainer>
         </EditNameContainer>
         <AvatarCarousel
-          userId={user?.uid}
+          userId={user?.displayName}
           noAction={() => {
             setDisplayWarning(true)
           }}
@@ -137,7 +132,7 @@ const Settings = ({ navigation }: { navigation: any }) => {
           <Switch
             value={morningReminder}
             trackColor={{ true: colors.highlight }}
-            onValueChange={(e) => {
+            onValueChange={e => {
               if (user) {
                 setMorningReminder(e)
                 if (e) {

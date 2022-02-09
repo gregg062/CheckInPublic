@@ -10,16 +10,14 @@ import HomeIcon from '../../../assets/icons/homeIcon'
 import ProfileIcon from '../../../assets/icons/profileIcon'
 import SettingsIcon from '../../../assets/icons/settingsIcon'
 import { colors } from '../../../theme'
-import { getUserProfile } from '../../../services/firebase'
 import { useAuthState } from '../../../hooks/useAuthState'
-import { useProfile } from '../../../providers/userProvider'
 import {
   AvatarContainer,
   AvatarImg,
   MenuContainer,
   MenuIconContainer,
   OptionsContainer,
-  TouchZone
+  TouchZone,
 } from './Menu.styled'
 import { menuOptions } from '../../../../types/types'
 import { GradBack } from '../../../screens/screens.styled'
@@ -34,23 +32,12 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
   const expandMenu = useRef(useValue(40))
   const menuOpacity = useRef(useValue(1))
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
-  const [avatar, setAvatar] = useState<string>()
   const auth = useAuthState()
-  const user = useProfile()
   const [currentRoute, setCurrentRoute] = useState<string>('home')
 
   console.log(currentRoute, 'currentRoute')
   useEffect(() => {
     setMenuOpen(false)
-    const getAvatar = async () => {
-      if (auth.user) {
-        const profile = await getUserProfile(auth.user.uid)
-        if (profile) {
-          setAvatar(profile.photo)
-        }
-      }
-    }
-    getAvatar()
   }, [change, auth])
 
   console.log(auth.user, 'auth.user')
@@ -59,12 +46,12 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
     Animated.timing(expandMenu.current, {
       toValue: menuOpen ? 240 : 50,
       duration: menuOpen ? 200 : 100,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }).start()
     Animated.timing(menuOpacity.current, {
       toValue: menuOpen ? 1 : 0,
       duration: 600,
-      easing: Easing.linear
+      easing: Easing.linear,
     }).start()
   }, [menuOpen])
 
@@ -86,7 +73,7 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
           color={current === 'Home' ? colors.black : colors.gray}
         />
       ),
-      text: 'Home'
+      text: 'Home',
     },
     {
       icon: (
@@ -95,7 +82,7 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
           color={current === 'Profile' ? colors.black : colors.gray}
         />
       ),
-      text: 'Profile'
+      text: 'Profile',
     },
     {
       icon: (
@@ -104,8 +91,8 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
           color={current === 'Settings' ? colors.black : colors.gray}
         />
       ),
-      text: 'Settings'
-    }
+      text: 'Settings',
+    },
   ]
 
   return (
@@ -113,7 +100,7 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
       <MenuContainer
         menuOpen={menuOpen}
         style={{
-          width: expandMenu.current
+          width: expandMenu.current,
         }}
       >
         <TouchZone
@@ -127,7 +114,7 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
           <OptionsContainer
             menuOpen={menuOpen}
             style={{
-              opacity: menuOpacity.current
+              opacity: menuOpacity.current,
             }}
           >
             {menuItems.map((item, index) => {
@@ -162,8 +149,8 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
             nav?.navigate('Profile')
           }}
         >
-          {user?.photo ? (
-            <AvatarImg source={{ uri: user?.photo }} />
+          {auth.user?.photo ? (
+            <AvatarImg source={auth.user?.photo} />
           ) : (
             <GradBack
               start={{ x: 0, y: 0.2 }}
@@ -171,7 +158,7 @@ const Menu: FC<Props> = ({ nav, current, change }) => {
               colors={colors.brightGrad}
               style={{
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
               <AvatarIcon color={colors.white} width={20} />

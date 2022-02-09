@@ -1,8 +1,9 @@
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { useEffect, useMemo, useState } from 'react'
+import { UserProfile } from '../../types/types'
+import { userAccessStore } from '../store/user'
 
 export type AuthState = {
-  user: FirebaseAuthTypes.User | undefined
+  user: UserProfile | undefined
   loading: boolean
 }
 
@@ -11,12 +12,15 @@ export const useAuthState = (): AuthState => {
     user: undefined,
     loading: true
   })
+  const userStore = userAccessStore()
 
   useEffect(() => {
-    auth().onAuthStateChanged((user) => {
-      if (user) {
+      if (userStore) {
         setState({
-          user,
+          user: {
+            displayName: 'John Smith',
+            photo: require('../assets/images/avatarOne.jpg'),
+          },
           loading: false
         })
       } else {
@@ -25,7 +29,6 @@ export const useAuthState = (): AuthState => {
           loading: false
         })
       }
-    })
   }, [])
 
   const authState = useMemo(() => state, [state])

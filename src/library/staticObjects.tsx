@@ -6,168 +6,168 @@ export const homeTileData: TileData[] = [
     id: 1,
     title: 'Morning Check-In',
     to: 'Morning',
-    image: require('../assets/images/morning.jpg')
+    image: require('../assets/images/morning.jpg'),
   },
   {
     id: 3,
     title: 'Post Session',
     to: 'PostSurvey',
-    image: require('../assets/images/post.jpg')
+    image: require('../assets/images/post.jpg'),
   },
   {
     id: 5,
     title: 'Injury Report',
     to: 'Injury',
-    image: require('../assets/images/injury.jpg')
-  }
+    image: require('../assets/images/injury.jpg'),
+  },
 ]
 
 export const SleepSlider: Options[] = [
   {
     topEnd: 2,
-    output: 'Insomnia'
+    output: 'Insomnia',
   },
   {
     topEnd: 4,
-    output: 'Restless'
+    output: 'Restless',
   },
   {
     topEnd: 6,
-    output: 'OK'
+    output: 'OK',
   },
   {
     topEnd: 8,
-    output: 'Relaxed'
+    output: 'Relaxed',
   },
   {
     topEnd: 10,
-    output: 'Great Sleep'
-  }
+    output: 'Great Sleep',
+  },
 ]
 
 export const FatigueSlider: Options[] = [
   {
     topEnd: 2,
-    output: 'Exhausted'
+    output: 'Exhausted',
   },
   {
     topEnd: 4,
-    output: 'Slightly Tired'
+    output: 'Slightly Tired',
   },
   {
     topEnd: 6,
-    output: 'OK'
+    output: 'OK',
   },
   {
     topEnd: 8,
-    output: 'Fresh'
+    output: 'Fresh',
   },
   {
     topEnd: 10,
-    output: 'Recovered'
-  }
+    output: 'Recovered',
+  },
 ]
 
 export const SorenessSlider: Options[] = [
   {
     topEnd: 2,
-    output: 'Very Sore'
+    output: 'Very Sore',
   },
   {
     topEnd: 4,
-    output: 'Achy'
+    output: 'Achy',
   },
   {
     topEnd: 6,
-    output: 'OK'
+    output: 'OK',
   },
   {
     topEnd: 8,
-    output: 'Good'
+    output: 'Good',
   },
   {
     topEnd: 10,
-    output: 'No Soreness'
-  }
+    output: 'No Soreness',
+  },
 ]
 
 export const MoodSlider: Options[] = [
   {
     topEnd: 2,
-    output: 'Miserable'
+    output: 'Miserable',
   },
   {
     topEnd: 4,
-    output: 'Grumpy'
+    output: 'Grumpy',
   },
   {
     topEnd: 6,
-    output: 'OK'
+    output: 'OK',
   },
   {
     topEnd: 8,
-    output: 'Happy'
+    output: 'Happy',
   },
   {
     topEnd: 10,
-    output: 'Great'
-  }
+    output: 'Great',
+  },
 ]
 
 export const MentalitySlider: Options[] = [
   {
     topEnd: 2,
-    output: 'Stressed'
+    output: 'Stressed',
   },
   {
     topEnd: 4,
-    output: 'Somewhat Distressed'
+    output: 'Somewhat Distressed',
   },
   {
     topEnd: 6,
-    output: 'OK'
+    output: 'OK',
   },
   {
     topEnd: 8,
-    output: 'Somewhat Alert'
+    output: 'Somewhat Alert',
   },
   {
     topEnd: 10,
-    output: 'Entergetic'
-  }
+    output: 'Entergetic',
+  },
 ]
 
 export const SeveritySlider: Options[] = [
   {
     topEnd: 2,
-    output: 'No Pain'
+    output: 'No Pain',
   },
   {
     topEnd: 4,
-    output: 'A Little Pain'
+    output: 'A Little Pain',
   },
   {
     topEnd: 6,
-    output: 'Moderate Pain'
+    output: 'Moderate Pain',
   },
   {
     topEnd: 8,
-    output: 'Painful'
+    output: 'Painful',
   },
   {
     topEnd: 10,
-    output: 'Severe Pain'
-  }
+    output: 'Severe Pain',
+  },
 ]
 
 export const Avatars = [
-  'https://firebasestorage.googleapis.com/v0/b/amped-wellness.appspot.com/o/Avatars%2FavatarOne.jpg?alt=media&token=1f12ecc4-0f01-4817-8463-a5faf908a229',
-  'https://firebasestorage.googleapis.com/v0/b/amped-wellness.appspot.com/o/Avatars%2FavatarTwo.jpg?alt=media&token=7fc907b0-2f00-47f0-9d33-81fdb53e4307',
-  'https://firebasestorage.googleapis.com/v0/b/amped-wellness.appspot.com/o/Avatars%2FavatarThree.jpg?alt=media&token=8ac4b43e-423e-4053-8b94-40576775893e',
-  'https://firebasestorage.googleapis.com/v0/b/amped-wellness.appspot.com/o/Avatars%2FavatarFour.jpg?alt=media&token=15268815-9221-47e4-8e1b-9f6c6daa2fa4',
-  'https://firebasestorage.googleapis.com/v0/b/amped-wellness.appspot.com/o/Avatars%2FavatarFive.jpg?alt=media&token=31010f7f-5dd3-4713-b0b3-abb3120b4479',
-  'https://firebasestorage.googleapis.com/v0/b/amped-wellness.appspot.com/o/Avatars%2FavatarSix.jpg?alt=media&token=05136c3c-7006-4042-ad36-b881bdfa37f0',
-  'https://firebasestorage.googleapis.com/v0/b/amped-wellness.appspot.com/o/Avatars%2FavatarSeven.jpg?alt=media&token=1b6d5663-5e33-4aa7-80d5-17f6c99b02db'
+  require('../assets/images/avatarOne.jpg'),
+  require('../assets/images/avatarTwo.jpg'),
+  require('../assets/images/avatarThree.jpg'),
+  require('../assets/images/avatarFour.jpg'),
+  require('../assets/images/avatarFive.jpg'),
+  require('../assets/images/avatarSix.jpg'),
+  require('../assets/images/avatarSeven.jpg'),
 ]
 
 export const morningStartingPoint: SurveyResults = {
@@ -179,7 +179,7 @@ export const morningStartingPoint: SurveyResults = {
   bodyRating: 'Exhausted',
   sorenessRating: 'Very Sore',
   moodRating: 'Miserable',
-  mentalityRating: 'Stressed'
+  mentalityRating: 'Stressed',
 }
 
 export const RpeNumbers = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
@@ -210,5 +210,5 @@ export const bodyParts: string[] = [
   'Left Lower Leg',
   'Right Lower Leg',
   'Left Ankle/Foot',
-  'Right Ankle/Foot'
+  'Right Ankle/Foot',
 ]

@@ -15,7 +15,6 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 import { SeveritySlider } from '../../../library/staticObjects'
 import ScrollHeaderWrapper from '../../../components/organisms/scrollableHeaderWrapper'
 import { SurveyResults, SurveyType } from '../../../../types/types'
-import { submitSurvey } from '../../../services/firebase'
 import { useAuthState } from '../../../hooks/useAuthState'
 import { userAccessStore } from '../../../store/user'
 import { SurveyDescriptionContainer } from '../Surveys.styled'
@@ -23,7 +22,7 @@ import {
   BodyButton,
   DateContainer,
   DateInput,
-  InjuryContainer
+  InjuryContainer,
 } from './Injury.styled'
 import { useToast } from '../../../providers/toastProvider'
 
@@ -49,7 +48,7 @@ const Injury: FC<InjuryProps> = ({ route, navigation }) => {
     date: '',
     injuryType: '',
     severity: 0,
-    injuryAreas: []
+    injuryAreas: [],
   })
 
   const handleCancel = () => {
@@ -69,9 +68,8 @@ const Injury: FC<InjuryProps> = ({ route, navigation }) => {
         title="Injury Report"
         submit={() => {
           if (auth) {
-            submitSurvey(auth.user?.uid, info.accessInfo?.org, results.current)
             toast({
-              text: '👍 Injury Report Submitted Successfully.'
+              text: '👍 Injury Report Submitted Successfully.',
             })
           }
           navigation.navigate('Home')
@@ -115,7 +113,7 @@ const Injury: FC<InjuryProps> = ({ route, navigation }) => {
             hasPadding
             options={[
               { label: 'Contact', value: 'c' },
-              { label: 'Non Contact', value: 'nc' }
+              { label: 'Non Contact', value: 'nc' },
             ]}
           />
           <AnimatedSlider
@@ -150,7 +148,7 @@ const Injury: FC<InjuryProps> = ({ route, navigation }) => {
           setModalOpen(false)
           buttonOpac.setValue(1)
         }}
-        submit={(areas) => {
+        submit={areas => {
           setModalOpen(false)
           console.log(areas)
           results.current.injuryAreas = areas
