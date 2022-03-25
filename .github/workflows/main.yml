@@ -1,6 +1,6 @@
-name: build
+name: testCoverage
 on:
-  push:
+  pull_request:
     branches:
       - master
     tags:
