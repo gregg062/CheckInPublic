@@ -1,14 +1,50 @@
-name: Test Coverage
-  workflow_dispatch:
-  
+name: build
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '!*' # Do not execute on tags
+    paths:
+      - src/*
+      - test/*
+      - '*.json'
+      - yarn.lock
+  pull_request:
+    paths:
+      - '!*.MD'
 jobs:
-  build:
+  test:
+    strategy:
+      matrix:
+        platform: [ ubuntu-latest, macOS-latest ]
+        node: [ '14', '12' ]
+    name: test/node ${{ matrix.node }}/${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: ${{ matrix.node }}
+    - run: npm install -g yarn
+    - run: yarn install
+    - run: yarn build
+    - run: yarn test
+  coverage:
+    needs: [ test ]
+    name: coverage
     runs-on: ubuntu-latest
     steps:
-  - name: Test & publish code coverage
-    uses: paambaati/codeclimate-action@v3.0.0
-    env:
-      CC_TEST_REPORTER_ID: 64f0459bc11f9673e92ad82e6807122dcb1b973766cfcbcd66973972e8ec7de5
-    with:
-      coverageCommand: npm run coverage
-      debug: true
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12'
+    - run: npm install -g yarn
+    - run: yarn install
+    - run: yarn build
+    - uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        CC_TEST_REPORTER_ID: 64f0459bc11f9673e92ad82e6807122dcb1b973766cfcbcd66973972e8ec7de5
+      with:
+        coverageCommand: yarn run coverage
+        debug: true
