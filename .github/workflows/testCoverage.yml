@@ -41,6 +41,7 @@ jobs:
       with:
         node-version: '12'
     - run: npm install -g yarn
+    - run: yarn cache clean
     - run: yarn install
     - uses: MartinNuc/codeclimate-action@1
       env:
